@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Way, No</title>
+	<link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>  
+	<style type="text/css">
+	html, body {
+		margin: 0;
+		padding: 0;
+		font-family: sans-serif;
+		font-family: 'Titillium Web', sans-serif;
+	}
+	#c {
+		background: rgb(191, 220, 181);
+		margin: 0;
+		padding: 0;
+		display: block;
+	}
+	.main {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		height: 100%;
+	}
+	.cont, .cont tr{
+		width: 100%;
+		height: 100%;
+	}
+	.end {
+		margin: 0 auto;
+		width: 200px;
+		background-color: rgba(255,255,255,0.5);
+		border: 1px solid white;
+		padding: 0 25px;
+	}
+	h1 {
+		font-family: 'Orbitron', sans-serif;
+	}
+	h1, .block {
+		margin: 25px 0 ;
+	}
+	a {
+		color: #178420;
+		text-decoration: none;
+		border-bottom: 1px solid;
+	}
+	a:active {
+		color: red;
+	}
+	a:hover {
+		color: #54CC5D;
+	}
+	</style>
+</head>
+<body>
+	<canvas id="c"></canvas>
+
+	<div class="main">
+		<table class="cont">
+			<tr><td>
+				<div class="end">
+					<h1>About Me</h1>
+					<div class="block">
+						<table>
+							<tr>
+								<td width="10px">Do:</td>
+								<td width="100">programming</td>
+							</tr>
+							<tr>
+								<td>Like:</td>
+								<td>programming</td>
+							</tr>
+						</table>
+					</div>
+					<div class="block">
+						<a href="https://github.com/noway">Github</a>
+					</div>
+				</div>
+			</td></tr>
+		</table>
+	</div>
+
+	<script type="text/javascript">
+	// Leave hope ye who enters
+	// Remember to never write like this
+	
+	var k = document.getElementById("c");
+	var c = k.getContext("2d");
+	var kwidth, kheight;
+	var positions = [];
+	var forces = [];
+	
+	function init_field() {
+		k.width = document.documentElement.clientWidth;
+		k.height = document.documentElement.clientHeight;
+		kwidth = k.width/40 + 3;
+		kheight= k.height/20 + 3;
+		
+		for(var y = 0; y < kheight; y++) {
+			positions[y] = [];
+			forces[y] = [];
+			for(var x = 0; x < kwidth; x ++) {
+				positions[y][x] = [x, y];
+				forces[y][x] = [0, 0];
+			}
+		}
+	}
+
+	function induce_disturbtion(vector, pos){
+		forces[pos[0]][pos[1]][0] = vector[0];
+		forces[pos[0]][pos[1]][1] = vector[1];
+	}
+	function a_btwn_points(p1, p2) {
+		return Math.atan2(p1[0]-p2[0],p1[1]-p2[1]);
+	}
+
+	function set_force(y,x,me_y,me_x,c){
+		if (typeof forces[y] == "undefined") {
+			return;
+		}
+		if (typeof forces[y][x] == "undefined") {
+			return;
+		}
+		var a = a_btwn_points(positions[y][x], positions[me_y][me_x]);
+		a -=  Math.PI / 4;
+		a +=  Math.PI;
+		var magn = c;
+		var kx = magn*Math.cos(a);
+		var ky = magn*Math.sin(a);
+		if(Math.sqrt(Math.pow(forces[y][x][0], 2)+Math.pow(forces[y][x][1], 2)) < magn)
+		{	
+			forces[y][x][0] += ky/4;
+			forces[y][x][1] += kx/4 ;
+		}
+	}
+
+	function dampen(y,x) {
+		if(forces[y][x][0] > 0) {
+			forces[y][x][0] -= 0.1;
+		} else {
+			forces[y][x][0] += 0.1;
+		}
+		
+		if(forces[y][x][1] > 0) {
+			forces[y][x][1] -= 0.1;
+		} else {
+			forces[y][x][1] += 0.1;
+		}
+	}
+
+	function process_disturbtion(){
+		var y, x;
+		for(y = 0; y < kheight; y++) {
+			for( x=0; x < kwidth; x ++) {
+				var vector = forces[y][x];
+
+				var magn = Math.sqrt(vector[0]*vector[0] + vector[1]*vector[1]);
+				var angl = Math.atan2(vector[0], vector[1]);
+
+				var comp_x = forces[y][x][1];
+				var comp_y = forces[y][x][0];
+
+				var c1 = Math.min(comp_y, 0)?magn:0;
+				var c2 = Math.min(comp_x, 0)?magn:0;
+				var c3 = Math.abs(Math.max(comp_x, 0))?magn:0;
+				var c4 = Math.abs(Math.max(comp_y, 0))?magn:0;
+
+				set_force(y-1, x-1, y, x, c3);
+				set_force(y-1, x+1, y, x, c1);
+				set_force(y+1, x-1, y, x, c4);
+				set_force(y+1, x+1, y, x, c2);
+				dampen(y,x);
+
+				var magn = Math.sqrt(forces[y][x][0]*forces[y][x][0]+forces[y][x][1]*forces[y][x][1]);
+				var angl = Math.atan2(forces[y][x][0], forces[y][x][1]);
+				angl += Math.PI/4;
+				var ky = magn*Math.sin(angl);
+				var kx = magn*Math.cos(angl);
+
+				positions[y][x][0] += ky/6;
+				positions[y][x][1] += kx/6;
+
+
+				positions[y][x][0] += (x-positions[y][x][0] )/40;
+				positions[y][x][1] += (y-positions[y][x][1] )/40;
+			}
+		}
+
+	}
+	function render(){
+		induce_disturbtion([Math.random()*2-1,Math.random()*2-1],[Math.floor(Math.random()*kheight), Math.floor(Math.random()*kwidth)]);
+		process_disturbtion();
+		
+		k.width = k.width;
+		c.beginPath();
+		c.moveTo(0,0);
+
+		for(var y = 0; y < kheight-1; y++) {
+			var x1 = (positions[y+0][0][0]-1)*40;
+			var y1 = (positions[y+0][0][1]-1)*20;
+			c.moveTo(x1,y1);
+
+			for(var x = 0; x < kwidth-1; x ++) {
+				x1 = (positions[y+x%2][Math.min(x+y%2,kwidth)][0]-1)*40;
+				y1 = (positions[y+x%2][Math.min(x+y%2,kwidth)][1]-1)*20;
+
+				c.lineTo(x1,y1);
+			}
+		}
+		c.strokeStyle="white";
+		c.stroke();
+
+		requestAnimationFrame(render);
+	}
+	init_field()
+	process_disturbtion();
+	requestAnimationFrame(render);
+	window.onresize = function() {
+		init_field();
+	}
+	</script>
+</body>
+</html>
