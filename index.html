@@ -4,14 +4,14 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Way, No</title>
-	<link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>  
+	<link href='https://fonts.googleapis.com/css?family=Orbitron:900' rel='stylesheet' type='text/css'>
 	<style type="text/css">
 	html, body {
 		margin: 0;
 		padding: 0;
 		font-family: sans-serif;
-		font-family: 'Titillium Web', sans-serif;
+		font-family: 'Orbitron', sans-serif;
+		line-height: 10rem;
 	}
 	#c {
 		background: rgb(191, 220, 181);
@@ -25,33 +25,42 @@
 		width: 100%;
 		height: 100%;
 	}
-	.cont, .cont tr{
+	.center-cont {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+	}
+	.cont{
 		width: 100%;
 		height: 100%;
 	}
 	.end {
 		margin: 0 auto;
-		width: 200px;
-		background-color: rgba(255,255,255,0.5);
-		border: 1px solid white;
 		padding: 0 25px;
+
+		transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg);
+		overflow: hidden;
 	}
 	h1 {
 		font-family: 'Orbitron', sans-serif;
 	}
 	h1, .block {
 		margin: 25px 0 ;
+
+		margin: 25px 0;
+		font-size: 5rem;
+		font-weight: 800;
 	}
 	a {
-		color: #178420;
+		color: #12a91f;
 		text-decoration: none;
-		border-bottom: 1px solid;
 	}
 	a:active {
 		color: red;
 	}
 	a:hover {
-		color: #54CC5D;
+		color: #38d645;
 	}
 	</style>
 </head>
@@ -59,28 +68,18 @@
 	<canvas id="c"></canvas>
 
 	<div class="main">
-		<table class="cont">
-			<tr><td>
+		<div class="cont">
+			<div class="center-cont">
 				<div class="end">
-					<h1>About Me</h1>
-					<div class="block">
-						<table>
-							<tr>
-								<td width="10px">Do:</td>
-								<td width="100">programming</td>
-							</tr>
-							<tr>
-								<td>Like:</td>
-								<td>programming</td>
-							</tr>
-						</table>
-					</div>
+					<div class="block">ILIA SIDORENKO</div>
+					<div class="block">FULL STACK DEV</div>
 					<div class="block">
 						<a href="https://github.com/noway">Github</a>
+						<!-- <a href="mailto:REDACTED">Contact</a> -->
 					</div>
 				</div>
-			</td></tr>
-		</table>
+			</div>
+		</div>
 	</div>
 
 	<script type="text/javascript">
@@ -140,14 +139,18 @@
 	function dampen(y,x) {
 		if(forces[y][x][0] > 0) {
 			forces[y][x][0] -= 0.1;
-		} else {
+		} else if (forces[y][x][0] < 0) {
 			forces[y][x][0] += 0.1;
+		} else {
+			forces[y][x][0] = 0;
 		}
 		
 		if(forces[y][x][1] > 0) {
 			forces[y][x][1] -= 0.1;
-		} else {
+		} else if (forces[y][x][1] < 0) {
 			forces[y][x][1] += 0.1;
+		} else {
+			forces[y][x][1] = 0;
 		}
 	}
 
@@ -180,8 +183,8 @@
 				var ky = magn*Math.sin(angl);
 				var kx = magn*Math.cos(angl);
 
-				positions[y][x][0] += ky/6;
-				positions[y][x][1] += kx/6;
+				positions[y][x][0] += ky/2;
+				positions[y][x][1] += kx/2;
 
 
 				positions[y][x][0] += (x-positions[y][x][0] )/40;
@@ -191,7 +194,9 @@
 
 	}
 	function render(){
-		induce_disturbtion([Math.random()*2-1,Math.random()*2-1],[Math.floor(Math.random()*kheight), Math.floor(Math.random()*kwidth)]);
+		for (var i = 0; i < 1; i++) {
+			induce_disturbtion([(Math.random()*2-1)/5,(Math.random()*2-1)/5],[Math.floor(Math.random()*kheight), Math.floor(Math.random()*kwidth)]);
+		};
 		process_disturbtion();
 		
 		k.width = k.width;
@@ -210,11 +215,12 @@
 				c.lineTo(x1,y1);
 			}
 		}
-		c.strokeStyle="white";
+		c.strokeStyle="#4eaa29";
 		c.stroke();
 
 		requestAnimationFrame(render);
 	}
+
 	init_field()
 	process_disturbtion();
 	requestAnimationFrame(render);
