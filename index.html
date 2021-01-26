@@ -1,23 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
+<html data-bubblesppbfhhgcdehhbjigifndnfmcihegokbbprevent-events-conflict-installed="true"><head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Ilia Sidorenko</title>
-	<link href='https://fonts.googleapis.com/css?family=Orbitron:900' rel='stylesheet' type='text/css'>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
 	<style type="text/css">
 	html, body {
 		margin: 0;
 		padding: 0;
 		font-family: sans-serif;
-		font-family: 'Orbitron', sans-serif;
-		line-height: 10rem;
+		font-family: 'DM Sans', sans-serif;
+		background: black;
 	}
 	#c {
 		background: rgb(191, 220, 181);
 		margin: 0;
 		padding: 0;
 		display: block;
+		opacity: 0.2;
 	}
 	.main {
 		position: absolute;
@@ -27,13 +27,20 @@
 	}
 	.center-cont {
 		display: flex;
-		justify-content: center;
-		align-items: center;
+		justify-content: flex-end;
+		align-items: flex-start;
 		height: 100%;
+		color: #bfbfbf;
+		flex-direction: column;
+		max-width: 500px;
 	}
 	.cont{
 		width: 100%;
 		height: 100%;
+		padding-bottom: 2rem;
+		box-sizing: border-box;
+		padding-left: 2rem;
+		padding-right: 2rem;
 	}
 	.end {
 		margin: 0 auto;
@@ -43,24 +50,29 @@
 		overflow: hidden;
 	}
 	h1 {
-		font-family: 'Orbitron', sans-serif;
-	}
-	h1, .block {
-		margin: 25px 0 ;
-
-		margin: 25px 0;
-		font-size: 5rem;
-		font-weight: 800;
+		margin-bottom: 0;
 	}
 	a {
 		color: #12a91f;
-		text-decoration: none;
+		   line-height: 1.75;
 	}
 	a:active {
 		color: red;
 	}
 	a:hover {
 		color: #38d645;
+	}
+
+	.mobile-breakpoint {
+		display: none;
+	}
+	@media (max-width: 480px) {
+		.links {
+			font-size: 1.5rem;
+		}
+		.mobile-breakpoint {
+			display: block;
+		}
 	}
 	</style>
 </head>
@@ -70,14 +82,17 @@
 	<div class="main">
 		<div class="cont">
 			<div class="center-cont">
-				<div class="end">
-					<div class="block">ILIA SIDORENKO</div>
-					<div class="block">FULL STACK DEV</div>
-					<div class="block">
-						<a href="https://github.com/noway">Github</a>
-						<!-- <a href="mailto:REDACTED">Contact</a> -->
-					</div>
-				</div>
+				<h1>Ilia Sidorenko</h1>
+				<p>
+					A software engineer with 7 years of experience. I'm passionate about building impactful tech products into successful companies.
+					<br/><br/>When I'm not working I participate in hackathons, enjoy outdoors and fast cars.
+				</p>
+				<div class="links"><a rel="noreferrer noopener" href="https://linkedin.com/in/ilia-sidorenko">LinkedIn</a></div>
+				<div class="links"><a rel="noreferrer noopener" href="https://github.com/noway">GitHub</a></div>
+				<div class="links"><a rel="noreferrer noopener" href="https://twitter.com/noway421">Twitter</a></div>
+				<br/>
+				<div class="links">ilia.sidorenko.421 <br class="mobile-breakpoint"/>(at) gmail.com</div>
+				<div style="display: none;" class="secret-thanks"> <br>A lot of thanks to my friend Walt who helped me design this website. 🥺</div>
 			</div>
 		</div>
 	</div>
