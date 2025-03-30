@@ -139,7 +139,7 @@
 		}
 	}
 
-	function induce_disturbtion(vector, pos){
+	function induce_disturbance(vector, pos){
 		forces[pos[0]][pos[1]][0] = vector[0];
 		forces[pos[0]][pos[1]][1] = vector[1];
 	}
@@ -185,7 +185,7 @@
 		}
 	}
 
-	function process_disturbtion(){
+	function process_disturbance(){
 		var y, x;
 		for(y = 0; y < kheight; y++) {
 			for( x=0; x < kwidth; x ++) {
@@ -226,9 +226,9 @@
 	}
 	function render(){
 		for (var i = 0; i < 1; i++) {
-			induce_disturbtion([(Math.random()*2-1)/5,(Math.random()*2-1)/5],[Math.floor(Math.random()*kheight), Math.floor(Math.random()*kwidth)]);
+			induce_disturbance([(Math.random()*2-1)/5,(Math.random()*2-1)/5],[Math.floor(Math.random()*kheight), Math.floor(Math.random()*kwidth)]);
 		};
-		process_disturbtion();
+		process_disturbance();
 		
 		k.width = k.width;
 		c.beginPath();
@@ -253,7 +253,7 @@
 	}
 
 	init_field()
-	process_disturbtion();
+	process_disturbance();
 	requestAnimationFrame(render);
 	window.onresize = function() {
 		init_field();
