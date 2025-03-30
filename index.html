@@ -225,9 +225,7 @@
 
 	}
 	function render(){
-		for (var i = 0; i < 1; i++) {
-			induce_disturbance([(Math.random()*2-1)/5,(Math.random()*2-1)/5],[Math.floor(Math.random()*kheight), Math.floor(Math.random()*kwidth)]);
-		};
+		induce_disturbance([(Math.random()*2-1)/5,(Math.random()*2-1)/5],[Math.floor(Math.random()*kheight), Math.floor(Math.random()*kwidth)]);
 		process_disturbance();
 		
 		k.width = k.width;
