@@ -151,9 +151,7 @@
 		if (typeof forces[y][x] == "undefined") {
 			return;
 		}
-		var a = a_btwn_points(positions[y][x], positions[me_y][me_x]);
-		a -=  Math.PI / 4;
-		a +=  Math.PI;
+		var a = a_btwn_points(positions[y][x], positions[me_y][me_x]) + 3*Math.PI/4;
 		var kx = c*Math.cos(a);
 		var ky = c*Math.sin(a);
 		if(Math.sqrt(Math.pow(forces[y][x][0], 2)+Math.pow(forces[y][x][1], 2)) < c)
@@ -191,8 +189,7 @@
 				dampen(y,x);
 
 				magn = Math.sqrt(forces[y][x][0]*forces[y][x][0]+forces[y][x][1]*forces[y][x][1]);
-				var angl = Math.atan2(forces[y][x][0], forces[y][x][1]);
-				angl += Math.PI/4;
+				var angl = Math.atan2(forces[y][x][0], forces[y][x][1]) + Math.PI/4;
 				var ky = magn*Math.sin(angl);
 				var kx = magn*Math.cos(angl);
 
