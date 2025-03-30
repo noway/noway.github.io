@@ -168,21 +168,8 @@
 	}
 
 	function dampen(y,x) {
-		if(forces[y][x][0] > 0) {
-			forces[y][x][0] -= 0.1;
-		} else if (forces[y][x][0] < 0) {
-			forces[y][x][0] += 0.1;
-		} else {
-			forces[y][x][0] = 0;
-		}
-		
-		if(forces[y][x][1] > 0) {
-			forces[y][x][1] -= 0.1;
-		} else if (forces[y][x][1] < 0) {
-			forces[y][x][1] += 0.1;
-		} else {
-			forces[y][x][1] = 0;
-		}
+		forces[y][x][0] -= 0.1 * Math.sign(forces[y][x][0]);
+		forces[y][x][1] -= 0.1 * Math.sign(forces[y][x][1]);
 	}
 
 	function process_disturbance(){
