@@ -172,7 +172,7 @@
 			for( x=0; x < kwidth; x ++) {
 				var vector = forces[y][x];
 
-				var magn = Math.sqrt(vector[0]*vector[0] + vector[1]*vector[1]);
+				var magn = Math.hypot(vector[0], vector[1]);
 
 				var comp_x = forces[y][x][1];
 				var comp_y = forces[y][x][0];
@@ -188,7 +188,7 @@
 				set_force(y+1, x+1, y, x, c2);
 				dampen(y,x);
 
-				magn = Math.sqrt(forces[y][x][0]*forces[y][x][0]+forces[y][x][1]*forces[y][x][1]);
+				magn = Math.hypot(forces[y][x][0], forces[y][x][1]);
 				var angl = Math.atan2(forces[y][x][0], forces[y][x][1]) + Math.PI/4;
 				var ky = magn*Math.sin(angl);
 				var kx = magn*Math.cos(angl);
